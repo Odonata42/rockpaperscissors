@@ -3,10 +3,10 @@
         //initialise computer answer variable
         // random number between 1-3
         // if 1, rock, if 2, paper, else- scissers
-let computerSelection= "";
+//let computerSelection= "";
 function computerPlay(){
         let rand = Math.floor(Math.random()*3);
-        return computerSelection = (rand==1) ? "rock" : (rand==2) ? "paper" : "scissors";
+        return (rand==1) ? "rock" : (rand==2) ? "paper" : "scissors";
 }
                 
     
@@ -14,16 +14,16 @@ function computerPlay(){
     //use prompt to get human answer
     //convert to lowercase
     //check for correct value
-let playerSelection= "";
+//let playerSelection= "";
 function getPlayerSelection(){
-    playerSelection = prompt("what is your selection?").toLowerCase();
+    let playerSelection = prompt("what is your selection?").toLowerCase();
     if(playerSelection == "rock" || playerSelection == "paper" || playerSelection== "scissors"){
-        console.log(computerSelection);
+        // console.log(computerSelection);
         return playerSelection;
     } else {
-    alert("please enter a correct value")
-    // playerSelection = prompt("what is your selection?").toLowerCase();
-    getPlayerSelection()
+        alert("please enter a correct value")
+        // playerSelection = prompt("what is your selection?").toLowerCase();
+        getPlayerSelection()
     }
 }
     
@@ -35,15 +35,21 @@ function getPlayerSelection(){
         //scissors vs paper
         //return win/ return loss
     
-let roundWin;
-function checkRoundWinner(){
+
+function checkRoundWinner(computerSelection, playerSelection){
     if(computerSelection!="" && playerSelection !=""){
+        console.log("you selected " + playerSelection + "the computer selected " + computerSelection)
         if (playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "paper" && computerSelection == "rock" || playerSelection == "scissors" && computerSelection == "paper"){
             console.log("congratulations, you've won this round!")
-            roundWin = true;
-        }else{
+            return "player";
+        }else if(playerSelection==computerSelection){
+            console.log("it's a tie");
+            return "none"
+        }
+        
+        else{
             console.log("sorry you've lost this round")
-            roundWin= false;
+            return "computer";
         }
     }else{
         console.log("game not working")
@@ -54,30 +60,32 @@ function checkRoundWinner(){
 //play game 5 times
 //if player wins, add to score
 //if computer wins add to score
-let playerScore=0;
-let computerScore=0;
+
 function game(){
+    let playerScore=0;
+    let computerScore=0;
     for (let i=0; i<5; i++){
-        getPlayerSelection();
-        computerPlay();
-        checkRoundWinner();
-        roundWin ? playerScore+=1 :computerScore+=1;
+        let playerSelection = getPlayerSelection();
+        let computerSelection = computerPlay();
+        let roundWin =checkRoundWinner(computerSelection, playerSelection);
+        roundWin=="player" ? playerScore+=1 :roundWin=="computer"? computerScore+=1: playerScore;
         console.log ("player score: " + playerScore);
-        console.log ("computerscore: " + computerScore);
+        console.log ("computerscore: " + computerScore);   
+    }
+    if (playerScore>computerScore){
+        console.log ("congratulations, you've won!")
+    }else if(computerScore>playerScore){
+        console.log("sorry you've lost the game :(")
+    }else if(playerScore==computerScore){
+        console.log("it's a tie!")
+    }else{
+        console.log("somethings gone wrong, please refresh the page")
     }
 }
 game();
 
 //compare scores
 //print winner
-if (playerScore>computerScore){
-    console.log ("congratulations, you've won!")
-}else if(computerScore>playerScore){
-    console.log("sorry you've lost the game :(")
-}else if(playerScore==computerScore){
-    console.log("it's a tie!")
-}else{
-    console.log("somethings gone wrong, please refresh the page")
-}
+
           
             
